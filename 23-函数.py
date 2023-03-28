@@ -270,7 +270,309 @@ def 函数名(参数1,参数2,参数3，......)：
 #     print('调用func2之前的x：', x)
 #     func2()
 #     print('调用func2之后的x：', x)
-
-
 # func1()
 # print('全局的x', x)
+
+# 变量名：指向的是变量值的内存地址
+# 函数名：指向的是函数的内存地址
+# def func():
+#     print('我是func')
+# # x = func
+# # print(x, func)
+# # x()
+# def func2(x):
+#     # print(x)
+#     # x()
+#     return x
+# a = 10
+# res = func2(func)    # func2(func的内存地址)   res拿到的是func的内存地址
+# # print(res)
+# res()
+
+# def func():
+#     print('我是func')
+# l = [func]
+# print(l[0])
+# l[0]()
+# d = {'k':func}
+# print(d)
+# d['k']()
+
+# 电子钱包功能
+# def login():
+#     print('执行登录功能')
+#
+#
+# def scan():
+#     print("执行扫码支付功能")
+#
+#
+# def transfer():
+#     print("执行转账功能")
+#
+#
+# def query():
+#     print("执行查询余额功能")
+#
+#
+# def recharge():
+#     print("执行充值功能")
+
+
+# func_dic = {
+#     # '0': exit,
+#     # '1': login,
+#     # '2': scan,
+#     # '3': transfer,
+#     # '4': query,
+#     # '5': recharge
+#     '0': (None, '退出'),
+#     '1': (login, '登录'),
+#     '2': (scan, '扫码支付'),
+#     '3': (transfer, '转账'),
+#     '4': (query, '查询余额'),
+#     '5': (recharge, '充值')
+# }
+
+# func_dic['1']()
+# while True:
+# print("""
+# 0 退出
+# 1 登录
+# 2 扫码
+# 3 转载
+# 4 查询余额
+# 5 充值
+# """)
+# for key in func_dic:
+#     print(key, func_dic[key][1])
+# opt = input('请输入功能编号>>>')
+# if opt == '0':
+#     break
+# if opt == '1':
+#     login()
+# elif opt == '2':
+#     scan()
+# elif opt == '3':
+#     transfer()
+# elif opt == '4':
+#     query()
+# elif opt == '5':
+#     recharge()
+# else:
+#     print('请按规则输入')
+# if opt not in func_dic:
+#     print("不存在")
+#     continue
+# func_dic[opt][0]()
+
+# 闭包函数
+# 闭函数：闭 封闭的意思 函数被封闭起来的
+# 包函数：函数内部包含对 外层函数  作用域名字的引用
+# def f1(x):
+#     def f2():
+#         print(x)
+#     return f2
+# res = f1(10)
+# # print(res)
+# x = 20
+# res()
+# f1()()
+
+# 装饰器 不修改被装饰对象的源代码，也不修改调用方式的前提下，给被装饰对象添加新的功能
+# 器： 器具 、 工具
+# 装饰： 为其他事物添加额外的功能
+# 定义一个函数 这个函数的功能就是用来装饰其他函数的
+# 也就是说这个函数是用来给其他函数添加额外功能的
+# 开放封闭原则
+# 开放：对扩展功能（增加功能）开放，扩展功能的意思是在源代码不做任何改变的情况下，为其增加功能
+# 封闭：对修改源代码是封闭的
+import time
+
+
+# 方案一：没有修改调用方式 但是修改了源代码
+# def inside(group, s):
+#     start = time.time()
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print('全军出击')
+#     end = time.time()
+#     res = end -start
+#     print(f"函数运行{res}秒")
+#
+# inside('红色',3)
+
+# 方案二 没有修改源代码和调用方式 同时还加上了新的功能 但是有大量重复代码，代码冗余
+# def inside(group, s):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print('全军出击')
+
+# start = time.time()
+# inside('红色', 3)
+# end = time.time()
+# print(f"函数运行{end-start}秒")
+
+# 方案三：解决了方案二的代码冗余问题，也没有修改被装饰对象的源代码，同时还为其增加了新的功能
+# 但是被装饰对象的调用方式被修改了
+# def inside(group, s):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print('全军出击')
+# def wrapper():
+#     start = time.time()
+#     inside('红色', 3)
+#     end = time.time()
+#     print(f"函数运行{end-start}秒")
+# wrapper()
+
+# # 方案四
+# def inside(group, s, z):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print(f'{z}出击')
+# def wrapper(*args, **kwargs):
+#     start = time.time()
+#     inside(*args, **kwargs)
+#     end = time.time()
+#     print(f"函数运行{end - start}秒")
+# wrapper('蓝色', 5, '全军')
+
+# # 方案五
+# def inside(group, s, z):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print(f'{z}出击')
+#
+#
+# print("原来的inside的内存地址>>>", inside)
+#
+#
+# def outer(func):
+#     # func = inside
+#     def wrapper(*args, **kwargs):
+#         start = time.time()
+#         func(*args, **kwargs)
+#         end = time.time()
+#         print(f"函数运行{end - start}秒")
+#
+#     return wrapper
+#
+#
+# # res = outer(inside)
+# # res('蓝色', 5, z='全军')
+# inside = outer(inside)
+# print("新的inside的内存地址>>>", inside)
+
+# # 方案六
+# def inside(group, s, z):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print(f'{z}出击')
+#
+#
+# def recharge(num):
+#     for i in range(num, 101):
+#         time.sleep(0.05)
+#         print(f'\r当前电量:{">" * i}{i}%', end=' ')
+#     print('\n电量已充满！！！')
+#
+#
+# print("原来的inside的内存地址>>>", inside)
+#
+#
+# def outer(func):
+#     def wrapper(*args, **kwargs):
+#         start = time.time()
+#         func(*args, **kwargs)
+#         end = time.time()
+#         print(f"函数运行{end - start}秒")
+#
+#     return wrapper
+#
+#
+# # res = outer(inside)
+# # res('蓝色', 5, z='全军')
+# inside = outer(inside)
+# print("新的inside的内存地址>>>", inside)
+# inside('蓝色', 5, z='全军')
+#
+# recharge = outer(recharge)
+# recharge(20)
+
+# 方案7
+# def inside(group, s, z):
+#     print('欢迎来到王者荣耀')
+#     print(f'你出生在{group}阵营')
+#     print(f'敌军还有{s}秒到达战场')
+#     time.sleep(s)
+#     print(f'{z}出击')
+# def recharge(num):
+#     for i in range(num, 101):
+#         time.sleep(0.05)
+#         print(f'\r当前电量:{">" * i}{i}%', end=' ')
+#     print('\n电量已充满！！！')
+#     return 100
+# print("原来的inside的内存地址>>>", inside)
+# def outer(func):
+#     def wrapper(*args, **kwargs):
+#         start = time.time()
+#         response = func(*args, **kwargs)
+#         end = time.time()
+#         print(f"函数运行{end - start}秒")
+#         return response
+#     return wrapper
+# res = outer(inside)
+# res('蓝色', 5, z='全军')
+# inside = outer(inside)
+# print("新的inside的内存地址>>>", inside)
+# inside('蓝色', 5, z='全军')
+#
+# recharge = outer(recharge)
+# res = recharge(20)
+# print(res)
+
+# 语法糖
+
+def count_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        response = func(*args, **kwargs)
+        end = time.time()
+        print(f"函数运行{end - start}秒")
+        return response
+
+    return wrapper
+
+
+@count_time  # inside = outer(inside)
+def recharge(num):
+    for i in range(num, 101):
+        time.sleep(0.05)
+        print(f'\r当前电量:{">" * i}{i}%', end=' ')
+    print('\n电量已充满！！！')
+    return 100
+
+
+@count_time  # recharge = outer(recharge)
+def inside(group, s, z):
+    print('欢迎来到王者荣耀')
+    print(f'你出生在{group}阵营')
+    print(f'敌军还有{s}秒到达战场')
+    time.sleep(s)
+    print(f'{z}出击')
+
+inside('蓝色', 5, z='全军')
+recharge(20)
